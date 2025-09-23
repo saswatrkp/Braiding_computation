@@ -36,9 +36,6 @@ hop_params = {'ty':1j*t, 'tx':1j*t, 'tz':1j*t, 'Jy':1j*J, 'Jx':1j*J, 'Jz':1j*J}
 #### Define the anyon parameters
 
 anyon_loop_indices = [100,137,93,147]
-# anyon_loop_indices = [100,59,90,137]
-
-
 
 
 #### Define Braiding path parameters
@@ -103,8 +100,6 @@ def test_single_braiding_step(path_anyon_dict, ind_step, N_steps, i_path, check=
     create_anyons(msys=model, anyon_loop_indices=anyon_loop_indices)
     print('Number of sites:', model.N_sites)
 
-    T_evec = local_anyon_basis_pbc(msys=model, anyon_loop_indices=anyon_loop_indices, check=False)
-
     path = path_anyon_dict_2_path(msys=model, path_anyon_dict=path_anyon_dict)
     N_path = len(path)
     print(f'Braiding path: {path}')
@@ -115,7 +110,7 @@ def test_single_braiding_step(path_anyon_dict, ind_step, N_steps, i_path, check=
 
     return X
 
-ind_step = 0 # np.random.randint(low=0, high=50)
+ind_step = 0 
 N_steps = 20
 i_path = 5
 overlap = test_single_braiding_step(path_anyon_dict=path_anyon_dict, ind_step=ind_step, N_steps=N_steps, i_path=i_path, check=True)
