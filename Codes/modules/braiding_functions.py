@@ -339,7 +339,7 @@ def compute_braiding_single_step(msys, anyon_loop_indices, path, path_anyon_dict
 
     #### Get current anyonic eigenstates
     E_val_prev, E_vec_prev = eigh(msys.ham.toarray())
-    E_vec_prev = local_anyon_basis_pbc(msys, anyon_loop_indices=anyon_loop_indices)
+    E_vec_prev = local_anyon_basis_pbc(msys, anyon_loop_indices=anyon_loop_indices, check=check)
     atol = 1e-12
     N_max = sum(E_val_prev < atol)
     N_min = sum(E_val_prev < -atol) 
@@ -383,7 +383,7 @@ def compute_braiding_single_step(msys, anyon_loop_indices, path, path_anyon_dict
 
     #### Get new anyonic states
     E_val_new, E_vec_new = eigh(msys.ham.toarray())
-    E_vec_new = local_anyon_basis_pbc(msys, anyon_loop_indices=anyon_loop_indices)
+    E_vec_new = local_anyon_basis_pbc(msys, anyon_loop_indices=anyon_loop_indices, check=check)
     atol = 1e-12
     N_max = sum(E_val_new < atol)
     N_min = sum(E_val_new < -atol)  

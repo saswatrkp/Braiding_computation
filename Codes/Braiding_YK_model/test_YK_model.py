@@ -110,6 +110,10 @@ def test_single_braiding_step(path_anyon_dict, ind_step, N_steps, i_path, check=
 
     return X
 
+
+#### One can play around with ind_step, N_steps and i_path to test a single braiding step and visulize the anyon movement. 
+#### To get the plots for anyons movement, set check=True and plot_anyons=True
+
 ind_step = 0 
 N_steps = 20
 i_path = 5
@@ -117,8 +121,11 @@ overlap = test_single_braiding_step(path_anyon_dict=path_anyon_dict, ind_step=in
 print(f'Norm of the overlap matrix: {np.linalg.norm(overlap)}')
     
 
-# %% Loop over all ind_steps:
-N_steps = 50
+# %% Loop over all ind_steps: 
+
+#### THIS STEP MIGHT TAKE SOME TIME. FOR EXAMPLE, FOR 4 ANYONS, 50 STEPS AND 14 PATHS, IT TAKES ABOUT 350 SECONDS.
+
+N_steps = 30 
 t0 = time()
 norm_overlap_list = []
 overlap_list = []

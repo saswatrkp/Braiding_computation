@@ -976,7 +976,7 @@ class Kitaev_honeycomb(__model_system__):
             tags.append(site1.tag)
             tags.append(site2.tag)
         tags = list(set(tags))
-        print(f'N_tags: {len(tags)}')
+        # print(f'N_tags: {len(tags)}')
         
         N_loop = 0
         for tag in tags:
@@ -1311,7 +1311,7 @@ class Yao_Kivelson(__model_system__):
             tags.append(site1.tag)
             tags.append(site2.tag)
         tags = list(set(tags))
-        print(f'N_tags: {len(tags)}')
+        # print(f'N_tags: {len(tags)}')
         
         families_dodec = [lat_a, lat_b, lat_c, lat_d, lat_f, lat_e, lat_b, lat_a, lat_d, lat_c, lat_e, lat_f]
         tags_dodec = [[0,0],[0,0],[0,0],[0,0],[1,0],[1,0],[1,0],[1,0],[1,-1],[1,-1],[1,-1],[1,-1]]
