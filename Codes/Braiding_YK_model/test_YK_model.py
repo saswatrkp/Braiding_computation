@@ -98,14 +98,9 @@ def test_single_braiding_step(path_anyon_dict, ind_step, N_steps, i_path, check=
     syst_params['pbc'] = True
     model = Yao_Kivelson(syst_params=syst_params, hop_params=hop_params)
     create_anyons(msys=model, anyon_loop_indices=anyon_loop_indices)
-    print('Number of sites:', model.N_sites)
 
     path = path_anyon_dict_2_path(msys=model, path_anyon_dict=path_anyon_dict)
-    N_path = len(path)
-    print(f'Braiding path: {path}')
-    print(f'Number of steps in the path: {N_path}')
 
-    print(f'i_path={i_path}, ind_step={ind_step}, N_steps = {N_steps}')
     X = compute_braiding_single_step(msys=model, anyon_loop_indices=anyon_loop_indices, path=path, path_anyon_dict=path_anyon_dict, i_path=i_path, ind_step=ind_step,N_steps= N_steps, check=check, plot_anyons=plot_anyons)
 
     return X
@@ -117,7 +112,7 @@ def test_single_braiding_step(path_anyon_dict, ind_step, N_steps, i_path, check=
 ind_step = 0 
 N_steps = 20
 i_path = 5
-overlap = test_single_braiding_step(path_anyon_dict=path_anyon_dict, ind_step=ind_step, N_steps=N_steps, i_path=i_path, check=True)
+overlap = test_single_braiding_step(path_anyon_dict=path_anyon_dict, ind_step=ind_step, N_steps=N_steps, i_path=i_path, check=False,)
 print(f'Norm of the overlap matrix: {np.linalg.norm(overlap)}')
     
 
@@ -125,16 +120,16 @@ print(f'Norm of the overlap matrix: {np.linalg.norm(overlap)}')
 
 #### THIS STEP MIGHT TAKE SOME TIME. FOR EXAMPLE, FOR 4 ANYONS, 50 STEPS AND 14 PATHS, IT TAKES ABOUT 350 SECONDS.
 
-N_steps = 30 
+N_steps = 20 
 t0 = time()
 norm_overlap_list = []
 overlap_list = []
 for i_path in range(len(path_anyon_dict)):
     for ind_step in range(1, N_steps+1):
         overlap = test_single_braiding_step(path_anyon_dict=path_anyon_dict, ind_step=ind_step, N_steps=N_steps, i_path=i_path, check=False)
-        print(f'Norm of the overlap matrix: {np.linalg.norm(overlap)}')
         overlap_list.append(overlap)
         norm_overlap_list.append(np.linalg.norm(overlap))
+    print(f'Completed path: {i_path}')
 t1 = time()
 print(f'\nTime taken for {N_steps*len(path_anyon_dict)} steps: {t1-t0} seconds\n')
 

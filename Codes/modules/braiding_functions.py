@@ -87,7 +87,7 @@ def local_anyon_basis_pbc(msys, anyon_loop_indices, check = False, atol=1e-14):
 
 
         if check==True:
-            assert allclose(H_BA @ vec, zeros([NB])), f'H_BA does not annihilate chosen state. norm(H_BA @ vec - Zero) = {norm(H_BA @ vec)}'
+            assert allclose(H_BA @ vec, zeros([NB,1])), f'H_BA does not annihilate chosen state. norm(H_BA @ vec - Zero) = {norm(H_BA @ vec)}'
             H_A = H_new[:NA, :NA]
             fig, ax = plt.subplots(1,2, figsize=(8,4), constrained_layout=True)
             state_color= log(abs(P_inv @ out_state)/norm(abs(P_inv @ out_state)))
