@@ -3,10 +3,11 @@ from numpy import conj, transpose, zeros, sqrt, vdot, allclose, arange, abs, log
 from numpy.linalg import qr, eigvalsh
 from copy import deepcopy
 from kwant import plot as kplot
+import h5py
+import modules.hdf5_io as hdf5_io
+from datetime import datetime
 
 
-
-# %% support functions
 # %% Supporting functions
 
 def switch_grid(ax):
@@ -401,3 +402,72 @@ def plot_system(model, anyon_loop_indices, ax, show_bond_indices=False, show_loo
     )
     turnoff_labels(ax)
     switch_grid(ax)
+
+
+
+# %% Save Results
+
+def save_results_h5py(filename, data, key=None):
+    """
+    Save data to an HDF5 file using h5py.
+    Parameters
+    ----------
+    filename : str
+        The path to the HDF5 file where the data will be saved.
+    data : any
+        The data to be saved. The structure and type should be compatible with `hdf5_io.save_to_hdf5`.
+    key : str, optional
+        A key to identify the data in the HDF5 file. If not provided, a timestamp will be used.
+    Returns
+    Notes
+    -----
+    This function uses `hdf5_io.save_to_hdf5` to handle the actual saving process.
+    The file is opened in append mode ('a+'), which allows for adding new data without overwriting existing data.
+    
+    """
+    if key is None:
+        key = str(datetime.now())
+
+    data_to_save = {}
+
+    # Retrieve the existing data if the file already exists
+    try:
+        with h5py.File(filename, 'r') as f:
+            existing_data = hdf5_io.load_from_hdf5(f)
+            if type(existing_data) is dict:
+                data_to_save = existing_data
+                data_to_save[key] = {'data':data}
+        
+            else:
+                print(f"ERROR: Existing data in {filename} is not a dictionary, but {type(existing_data)}.")
+    
+    except FileNotFoundError:
+        data_to_save[key] = {'data':data}
+        
+
+    # Save the data to an HDF5 file 
+    with h5py.File(filename, 'w') as f:
+        hdf5_io.save_to_hdf5(f, data_to_save)
+    
+# %% Load Results
+
+def load_results_h5py(filename):
+    """
+    Load data from an HDF5 file using h5py.
+    Parameters
+    ----------
+    filename : str
+        Path to the HDF5 file to be loaded.
+    Returns
+    -------
+    data : object
+        Data loaded from the HDF5 file using hdf5_io.load_from_hdf5.
+    
+    """
+    
+    with h5py.File(filename, 'r') as f:
+        data = hdf5_io.load_from_hdf5(f)
+    
+    return data
+
+# %%
